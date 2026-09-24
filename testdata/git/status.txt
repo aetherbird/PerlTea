@@ -1,0 +1,7 @@
+## main...origin/main [ahead 1, behind 2]
+ M lib/PerlTea.pm
+M  lib/PerlTea/App/GitDash.pm
+A  testdata/git/status.txt
+R  old/name.txt -> new/name.txt
+UU conflicted.txt
+?? scratch.log

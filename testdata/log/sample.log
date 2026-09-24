@@ -1,0 +1,7 @@
+Jun 13 10:00:01 host kernel: Linux version 6.12
+Jun 13 10:00:02 host systemd[1]: BOOTMARK_SENTINEL reached target Multi-User System.
+Jun 13 10:00:03 host sshd[812]: Server listening on 0.0.0.0 port 22.
+Jun 13 10:00:04 host cron[840]: (CRON) INFO (running with inotify support)
+Jun 13 10:00:05 host app[901]: WARN cache miss for key=42
+Jun 13 10:00:06 host app[901]: ERROR upstream timeout after 3s
+Jun 13 10:00:07 host app[901]: INFO recovered, serving normally

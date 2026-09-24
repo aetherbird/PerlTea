@@ -1,0 +1,8 @@
+{ "hits": { "total": 3, "hits": [
+  { "_source": { "distribution": "Mojolicious", "module": [{ "name": "Mojolicious" }],
+      "abstract": "Real-time web framework", "author": "SRI", "version": "9.99" } },
+  { "_source": { "distribution": "Dancer2", "module": [{ "name": "Dancer2" }],
+      "abstract": "Lightweight web application framework", "author": "XSAWYERX", "version": "1.1.0" } },
+  { "_source": { "distribution": "DBI", "module": [{ "name": "DBI" }],
+      "abstract": "Database independent interface for Perl", "author": "TIMB", "version": "1.645" } }
+] } }

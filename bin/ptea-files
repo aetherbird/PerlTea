@@ -1,0 +1,19 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::Files;
+
+# ptea-files - installed command for the dual-pane file manager.
+#
+# Usage: ptea-files [path]   (default: the current directory)
+#
+# The left pane lists the directory; the right pane previews the selected file.
+# Markdown files are rendered through PerlTea::App::Glow. Tab switches panes;
+# Enter descends into a directory; Left/Backspace returns up; `q` quits.
+
+my $path = @ARGV ? $ARGV[0] : '.';
+my $app = PerlTea::App::Files->new( path => $path );
+PerlTea->new( model => $app, alt_screen => 1 )->run;

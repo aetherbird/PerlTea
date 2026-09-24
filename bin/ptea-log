@@ -1,0 +1,20 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::Logexplorer;
+
+# ptea-log — installed command for the Logexplorer log viewer.
+# Opens a log file (or uses a sensible default source), and shows it in a
+# scrollable, filterable viewport. 'q' quits; the terminal is restored on exit.
+#
+# Usage: ptea-log [logfile]
+
+my $file = shift @ARGV;
+my $app  = PerlTea::App::Logexplorer->new(
+    ( defined $file && length $file ? ( path => $file ) : () ),
+);
+
+PerlTea->new( model => $app, alt_screen => 1 )->run;

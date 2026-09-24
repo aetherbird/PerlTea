@@ -1,0 +1,24 @@
+┌──────────────────────────────────────────────────────────────────────────────┐
+│[1;97;44m                             PerlTea G5 — Layout                              [0m│
+└──────────────────────────────────────────────────────────────────────────────┘
+Terminal size: 80x24                                                            
+Frame: 0                                                                        
+                                                                                
+The body flexes to fill the space between the header                            
+and the footer. Resize the terminal — it reflows with                           
+no absolute coordinates, only stacks and flexible sizes.                        
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+                                                                                
+[2;36mpress any key to advance · q to quit                                            [0m

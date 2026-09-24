@@ -1,0 +1,29 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::Watch;
+
+# ptea-watch - a TUI watch(1): re-run a command on an interval and
+# diff-highlight what changed.
+#
+#   ptea-watch --interval <secs> -- <command...>
+#
+# The command is re-run every <secs> seconds (default 2); lines that changed
+# since the previous run are highlighted in reverse video. `q` / Ctrl-C quit.
+
+my ( $interval, $argv, $err ) = PerlTea::App::Watch::parse_args(@ARGV);
+
+if ($err) {
+    print STDERR "ptea-watch: $err\n";
+    print STDERR "usage: ptea-watch --interval <secs> -- <command...>\n";
+    exit 2;
+}
+
+my $app = PerlTea::App::Watch->new(
+    command  => $argv,
+    interval => $interval,
+);
+PerlTea->new( model => $app, alt_screen => 1 )->run;

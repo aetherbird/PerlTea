@@ -1,0 +1,11 @@
+{
+  "name": "perltea",
+  "version": "0.01",
+  "apps": ["glow", "log", "slides", "gitdash"],
+  "meta": {
+    "author": "Scout",
+    "sentinel": "JSON_NODE_SENTINEL",
+    "nested": { "deep": 42, "flag": true }
+  },
+  "count": 8
+}

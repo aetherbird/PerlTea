@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use utf8;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::Slides;
+
+# ptea-slides — installed command for the Slides presenter.
+# Reads a Markdown deck, splits it on '---' lines, and presents one centered
+# slide at a time. 'q' quits; the terminal is restored on exit.
+#
+# Usage: ptea-slides <deck.md>
+
+sub usage {
+    print "usage: ptea-slides <deck.md>\n";
+    exit 1;
+}
+
+my $file = shift @ARGV;
+usage() unless defined $file && length $file;
+
+PerlTea->new( model => PerlTea::App::Slides->new( path => $file ), alt_screen => 1 )
+    ->run;

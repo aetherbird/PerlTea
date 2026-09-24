@@ -1,0 +1,28 @@
+Revision history for PerlTea
+
+0.02      2026-09-23
+          - Test robustness: t/cpan-parse.t now writes its malformed-JSON fixture
+            to a File::Temp directory instead of testdata/, so the suite passes
+            regardless of checkout ownership/permissions.
+          - Housekeeping: removed MANIFEST.bak (already covered by MANIFEST.SKIP).
+
+0.01      2026-06-14
+          - First release.
+          - MVU (model / update / view) terminal-UI framework in pure core Perl,
+            zero runtime dependencies (POSIX termios + hand-emitted ANSI).
+          - Core runtime: event loop with raw-mode setup and teardown that restores
+            the terminal on normal exit, Ctrl-C, and uncaught die.
+          - Diffing cell-buffer renderer with minimal-redraw output, alt-screen, and
+            resize handling.
+          - Input decoder: control keys, arrows/function keys, modifiers, bracketed
+            paste, and multi-byte UTF-8 (one key event per character).
+          - Asynchronous commands and timer subscriptions; the loop never blocks.
+          - Declarative styling (16/256/truecolor with downgrade, borders, padding,
+            margins, alignment), flexible layout (stacks, fixed/flex sizing, nesting),
+            and East-Asian-aware display widths.
+          - Starter components: viewport, list, text-input, spinner, paginator, help.
+          - Four applications shipped as installed commands:
+              ptea-glow      - markdown reader
+              ptea-log       - log explorer (live tail + regex filter)
+              ptea-slides    - markdown presenter
+              ptea-gitdash   - git dashboard

@@ -1,0 +1,151 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use utf8;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::Glow;
+use PerlTea::Component::Viewport;
+use PerlTea::Style;
+
+# ptea-glow — installed command for the Glow markdown reader.
+# Reads a Markdown file, renders it through PerlTea::App::Glow, and displays it
+# in a scrollable viewport, framed by a slim title bar (file name + scroll
+# position) and a key-hint footer. 'q' quits; the terminal is restored on exit.
+#
+# The markdown body is rendered by PerlTea::App::Glow::render — that output is
+# left byte-for-byte untouched; the header/footer are app chrome drawn here.
+#
+# Usage: ptea-glow <file.md>
+
+package PerlTea::CLI::Glow;
+
+sub new {
+    my ( $class, %args ) = @_;
+    my $self = bless {
+        path   => $args{path},
+        width  => $args{width}  || 80,
+        height => $args{height} || 24,
+    }, $class;
+    $self->_load;
+    return $self;
+}
+
+sub _load {
+    my ($self) = @_;
+    open my $fh, '<:encoding(UTF-8)', $self->{path}
+        or die "cannot open $self->{path}: $!\n";
+    local $/;
+    my $markdown = <$fh>;
+    close $fh;
+
+    # Reserve two rows for app chrome (a title bar and a key-hint footer); the
+    # markdown body scrolls inside the remaining rows.
+    my $body_h = $self->{height} - 2;
+    $body_h = 1 if $body_h < 1;
+
+    my $rendered = PerlTea::App::Glow::render( $markdown, width => $self->{width} );
+    $self->{viewport} = PerlTea::Component::Viewport->new(
+        width   => $self->{width},
+        height  => $body_h,
+        content => $rendered,
+    );
+
+    # Total content lines, used to show a scroll percentage in the title bar.
+    my @lines = split /\n/, $rendered, -1;
+    pop @lines if @lines && $lines[-1] eq '';
+    $self->{total_lines} = @lines ? scalar(@lines) : 1;
+    $self->{body_h}      = $body_h;
+    return $self;
+}
+
+sub init { return undef }
+
+sub update {
+    my ( $self, $msg ) = @_;
+
+    if ( ( $msg->{type} // '' ) eq 'resize' ) {
+        $self->{width}  = $msg->{width}  if $msg->{width};
+        $self->{height} = $msg->{height} if $msg->{height};
+        $self->_load;
+        return ( $self, undef );
+    }
+
+    return ( PerlTea->quit, undef ) if ( $msg->{key} // '' ) eq 'q';
+
+    my $key = $msg->{key} // '';
+    my $vp  = $self->{viewport};
+
+    if    ( $key eq 'up' || $key eq 'k' )     { $vp->scroll_up }
+    elsif ( $key eq 'down' || $key eq 'j' )   { $vp->scroll_down }
+    elsif ( $key eq 'pgup' )                  { $vp->page_up }
+    elsif ( $key eq 'pgdown' )                { $vp->page_down }
+    elsif ( $key eq 'home' || $key eq 'g' )   { $vp->goto_top }
+    elsif ( $key eq 'end' || $key eq 'G' )    { $vp->goto_bottom }
+
+    return ( $self, undef );
+}
+
+# Scroll position as a percentage (0% at top, 100% once the bottom is reached).
+sub _scroll_percent {
+    my ($self) = @_;
+    my $max = $self->{total_lines} - $self->{body_h};
+    return 0 if $max <= 0;
+    my $off = $self->{viewport}->offset;
+    my $pct = int( ( $off / $max ) * 100 + 0.5 );
+    $pct = 0   if $pct < 0;
+    $pct = 100 if $pct > 100;
+    return $pct;
+}
+
+# Shorten a path to its basename for the title bar.
+sub _basename {
+    my ($path) = @_;
+    ( my $base = $path ) =~ s{.*/}{};
+    return length $base ? $base : $path;
+}
+
+# Pad/truncate a (possibly styled) line to the full width. PerlTea::Style fills
+# the background to the requested width, so the bars span the screen cleanly.
+sub _bar {
+    my ( $self, $text, %style ) = @_;
+    return PerlTea::Style->new(
+        width  => $self->{width},
+        height => 1,
+        align  => 'left',
+        %style,
+    )->render($text);
+}
+
+sub view {
+    my ($self) = @_;
+
+    my $name   = _basename( $self->{path} );
+    my $pct    = $self->_scroll_percent;
+    my $title  = sprintf( ' %s', $name );
+    my $right  = sprintf( '%d%% ', $pct );
+    my $gap    = $self->{width} - length($title) - length($right);
+    $gap = 1 if $gap < 1;
+    my $header = $title . ( ' ' x $gap ) . $right;
+
+    my $footer = ' up/down j/k: scroll   g/G: top/bottom   q: quit';
+
+    return join "\n",
+        $self->_bar( $header, reverse => 1 ),
+        $self->{viewport}->view,
+        $self->_bar( $footer, faint   => 1 );
+}
+
+package main;
+
+sub usage {
+    print "usage: ptea-glow <file.md>\n";
+    exit 1;
+}
+
+my $file = shift @ARGV;
+usage() unless defined $file && length $file;
+
+PerlTea->new( model => PerlTea::CLI::Glow->new( path => $file ), alt_screen => 1 )
+    ->run;

@@ -1,0 +1,5 @@
+UNIT                     LOAD   ACTIVE   SUB     DESCRIPTION
+ssh.service              loaded active   running OpenSSH server daemon
+cron.service             loaded active   running Regular background program processing
+ptea-sentinel.service    loaded failed   failed  PerlTea sentinel test unit
+nginx.service            loaded inactive dead    nginx web server

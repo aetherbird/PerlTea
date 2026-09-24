@@ -1,0 +1,4 @@
+* main                4f3c2a1 [origin/main: ahead 1, behind 2] Implement C2 slides polish
+  feature/git-dash    8b7a6d5 [origin/feature/git-dash] Add dashboard fixtures
+  stale/local         10203aa [origin/stale/local: gone] Remove old panel
+  remotes/origin/main 9e8d7c6 Merge pull request #12 from demo/topic

@@ -1,0 +1,23 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::Json;
+
+# ptea-json - installed command for the JSON explorer.
+#
+# Usage: ptea-json <file.json>
+#
+# Loads a JSON document, renders its structure, and supports a small jq-like
+# path filter via `/` (for example `.meta.sentinel`). `q` quits cleanly.
+
+my $file = shift @ARGV;
+unless ( defined $file && length $file ) {
+    print "usage: ptea-json <file.json>\n";
+    exit 1;
+}
+
+my $app = PerlTea::App::Json->new( path => $file );
+PerlTea->new( model => $app, alt_screen => 1 )->run;

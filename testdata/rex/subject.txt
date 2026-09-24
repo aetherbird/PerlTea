@@ -1,0 +1,4 @@
+Contact alice@example.com or bob@test.org for details.
+Phone: 555-123-4567 and 555-987-6543.
+Order IDs: ORD-0001, ORD-0042, ORD-1234.
+The quick brown fox jumps over the lazy dog.

@@ -1,0 +1,5 @@
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+scout     1001 12.5  3.2 123456 45678 pts/0    S    10:00   0:30 perl ptea-sentinel-proc
+scout     1002  0.1  0.5  12345  6789 pts/0    S    10:01   0:01 bash
+root        42 88.8 10.0 999999 99999 ?        R    09:00   5:00 stress-cpu-hog
+www-data  2200  3.3  1.1  54321 12000 ?        S    08:30   0:12 nginx worker

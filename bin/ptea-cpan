@@ -1,0 +1,16 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::CPAN;
+
+# ptea-cpan - installed command for the MetaCPAN browser.
+#
+# Type a query, press Enter to search, use arrows to select, Enter to toggle a
+# small detail view, i to run cpanm for the selected module, and q to quit.
+# Set PERLTEA_CPAN_FIXTURE=/path/to/search.json for deterministic offline mode.
+
+my $app = PerlTea::App::CPAN->new;
+PerlTea->new( model => $app, alt_screen => 1 )->run;

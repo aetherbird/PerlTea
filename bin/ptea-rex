@@ -1,0 +1,24 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use utf8;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use PerlTea;
+use PerlTea::App::Rex;
+
+# ptea-rex — installed command for the regex playground.
+# Loads a subject file, focuses a pattern input, and live-highlights matches and
+# named captures as you type a Perl regex. 'q' quits; the terminal is restored
+# on every exit path.
+#
+# Usage: ptea-rex <subject-file>
+
+my $file = shift @ARGV;
+unless ( defined $file && length $file ) {
+    print "usage: ptea-rex <subject-file>\n";
+    exit 1;
+}
+
+my $app = PerlTea::App::Rex->new( path => $file );
+PerlTea->new( model => $app, alt_screen => 1 )->run;

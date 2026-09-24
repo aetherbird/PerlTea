@@ -1,0 +1,34 @@
+# Build artifacts
+^Makefile$
+Makefile\.old
+^blib/
+pm_to_blib
+\.tar\.gz$
+^PerlTea-
+^MYMETA\.
+^MANIFEST\.bak$
+__pycache__
+\.pyc$
+
+# Version-control metadata
+^\.git/
+^\.gitignore
+^\.gitattributes
+
+# Editor / OS droppings
+\.swp$
+\.swo$
+~$
+^\.DS_Store
+
+# Local testing / logs
+^ralph/run\.log
+^ralph/\.gate_count$
+
+# Internal build-loop / quest process docs — not part of the distribution
+^INSTRUCTIONS\.md$
+^QUEST_LOG\.md$
+^SPEC\.md$
+^SCOPE\.md$
+^docs/
+^ralph/

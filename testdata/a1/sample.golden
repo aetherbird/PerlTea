@@ -1,0 +1,15 @@
+[1;4;38;2;215;135;255mPerlTea[0m
+
+A [1mterminal UI[22m framework in the Elm architecture.
+
+[1;38;2;95;175;255mFeatures[0m
+
+  • model / update / view
+  • a diffing renderer
+  • [7mtea.NewProgram(m)[27m
+
+[38;2;215;215;175;48;2;38;38;38m func main() {                     [0m
+[38;2;215;215;175;48;2;38;38;38m     tea.NewProgram(model{}).Run() [0m
+[38;2;215;215;175;48;2;38;38;38m }                                 [0m
+
+That is [3mall[23m you need to start.
