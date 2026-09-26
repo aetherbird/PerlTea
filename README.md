@@ -1,4 +1,4 @@
-# PerlTea 🍵
+# PerlTea 🥤
 
 A terminal-UI framework for **Perl** in the Elm Architecture (`model / update / view`). It ships with four sample apps: a markdown reader, a log explorer, a slides tool, and a git dashboard.
 
