@@ -1,23 +1,8 @@
 # PerlTea 🍵
 
-A terminal-UI framework for **Perl** in the Elm Architecture (`model / update /
-view`) — a from-scratch, **zero-dependency** take on Bubble Tea's design. It fills a
-real gap on CPAN: the widget-tree toolkits exist (Curses::UI, Tickit), but the
-**MVU / Elm-architecture** paradigm has had no Perl entry. Shipped together with four
-real apps that prove the core holds: a markdown reader, a log explorer, a slides
-tool, and a git dashboard.
+A terminal-UI framework for **Perl** in the Elm Architecture (`model / update / view`). It ships with four sample apps: a markdown reader, a log explorer, a slides tool, and a git dashboard.
 
-> **Status:** v1 complete — the frozen framework core (G0–G6), four apps, and the
-> hardening pass (CPAN packaging, Unicode/wide-char) are all done and green. The
-> distribution also ships an extended toolbox of eight more tools (`ptea-rex`,
-> `-cpan`, `-top`, `-watch`, `-svc`, `-du`, `-json`, `-files`).
-
-## Why from-scratch / zero-dep
-
-The framework stands on **core Perl only** — `POSIX` termios for raw mode, and we
-emit ANSI escapes ourselves. No Tickit, no Curses, nothing off CPAN at runtime. That
-keeps it installable anywhere a modern `perl` runs and makes it a genuine MVU core
-rather than a wrapper over someone else's widget tree.
+The framework stands on **core Perl only** with a `POSIX` termios for raw mode.  It is installable anywhere modern `perl` runs.
 
 ## The architecture
 
@@ -38,7 +23,7 @@ package main;
 PerlTea->new( model => Counter->new, alt_screen => 1 )->run;
 ```
 
-- **model** is your state. **update** folds a message into the next state and returns
+- **model** is the state. **update** folds a message into the next state and returns
   an optional **command** (a coderef run asynchronously whose returned message
   re-enters `update`). **view** renders a string the diffing renderer paints with the
   minimal byte delta. Subscriptions feed timers/streams in as messages; the loop
@@ -67,8 +52,6 @@ prove -l t/                       # run the test suite
 perl -Ilib -c lib/PerlTea.pm      # compile-check a module
 perl -Ilib cmd/g0.pl              # run a gate demo
 ```
-
-No CPAN installs required — the toolchain and tests are all core Perl.
 
 ## Installation
 
